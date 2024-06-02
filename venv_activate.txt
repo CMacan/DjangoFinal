@@ -1,3 +1,7 @@
 venv\Scripts\Activate
 
 python manage.py runserver 
+
+Superuser:
+user - Macan65
+pass - 123456
