@@ -18,5 +18,5 @@ class StudentForm(forms.ModelForm):
             'fist_name': forms.TextInput(attrs={'class':'form-control'}),
             'last_name': forms.TextInput(attrs={'class':'form-control'}),
             'email': forms.EmailInput(attrs={'class':'form-control'}),  
-            'field_of_study': forms.TextInput(attrs={'class':'form-control'})
+            'field_of_study': forms.TextInput(attrs={'class':'form-control'}),
         }
