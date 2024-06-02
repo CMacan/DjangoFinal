@@ -14,10 +14,10 @@
                         <i class="fa-solid fa-address-card fa-lg"> Student Registration</i>
                     </div>
                     <div class="card-body">
-                        <form action="url 'add'" method="POST">
+                        <form action="{% url 'add' %}" method="POST">
                             {% csrf_token %}
                             {{ form.as_p }}
-                            <button type="button" class="btn btn-primary">Add</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
                             <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
                         </form>
                     </div>
