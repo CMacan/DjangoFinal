@@ -14,7 +14,7 @@
                         <i class="fa-solid fa-address-card fa-lg"> Student Registration</i>
                     </div>
                     <div class="card-body">
-                        <form action="{% url 'add' %}" method="POST">
+                        <form action="{% url 'add' %}" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form.as_p }}
                             <button type="submit" class="btn btn-primary">Add</button>

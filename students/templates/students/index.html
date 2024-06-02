@@ -15,6 +15,7 @@
                             <thead>
                                 <tr>
                                 <th scope="col">Student Number</th>
+                                <th scope="col">Profile Picure</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Email</th>
@@ -25,12 +26,13 @@
                             <tbody>
                                 {% for student in students %}
                                 <tr>
-                                    <td>{{ student.student_number}}</td>
-                                    <td>{{ student.first_name}}</td>
-                                    <td>{{ student.last_name}}</td>
-                                    <td>{{ student.email}}</td>
-                                    <td>{{ student.field_of_study}}</td>
-                                    <td>
+                                    <td class="align-middle">{{ student.student_number}}</td>
+                                    <td class="text-center align-middle">{% if student.profile_picture %}<img src="{{ student.profile_picture.url }}" alt="Profile Picture" style="max-height: 100px; max-width: 100px;">{% endif %}</td>
+                                    <td class="align-middle">{{ student.first_name}}</td>
+                                    <td class="align-middle">{{ student.last_name}}</td>
+                                    <td class="align-middle">{{ student.email}}</td>
+                                    <td class="align-middle">{{ student.field_of_study}}</td>
+                                    <td class="align-middle">
                                         <button type="button" class="btn btn-success me-1" href="{% url 'view_student' student.id %}" data-bs-toggle="modal" data-bs-target="#myModal{{student.id}}">
                                             <i class="fa-solid fa-circle-info fa-lg"></i>
                                         </button>
