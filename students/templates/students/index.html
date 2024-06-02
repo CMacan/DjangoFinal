@@ -1,4 +1,5 @@
 {% extends "students/base.html" %}
+{% load static %}
 {% block body %}
 <h3 class="m-4">All Students</h3>
     <div class="row">
@@ -27,7 +28,12 @@
                                 {% for student in students %}
                                 <tr>
                                     <td class="align-middle">{{ student.student_number}}</td>
-                                    <td class="text-center align-middle">{% if student.profile_picture %}<img src="{{ student.profile_picture.url }}" alt="Profile Picture" style="max-height: 100px; max-width: 100px;">{% endif %}</td>
+                                    <td class="text-center align-middle">
+                                        {% if student.profile_picture %}
+                                            <img src="{{ student.profile_picture.url }}" alt="Profile Picture" style="max-height: 100px; max-width: 100px;">
+                                        {% else %}
+                                            <img src="{% static 'images/avatar.png' %}" alt="Default Profile Picture" style="max-height: 100px; max-width: 100px;">
+                                        {% endif %}</td>
                                     <td class="align-middle">{{ student.first_name}}</td>
                                     <td class="align-middle">{{ student.last_name}}</td>
                                     <td class="align-middle">{{ student.email}}</td>
