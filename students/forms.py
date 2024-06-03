@@ -1,5 +1,6 @@
 from django import forms
 from .models import Student
+import re
 
 class StudentForm(forms.ModelForm):
     class Meta:
@@ -27,3 +28,15 @@ class StudentForm(forms.ModelForm):
         if not str(student_number).isdigit():
             raise forms.ValidationError("Please enter a valid student number.")
         return student_number
+    
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if not re.match("^[A-Za-z]+$", first_name):
+            raise forms.ValidationError("First name should not contain numbers or special characters.")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if not re.match("^[A-Za-z]+$", last_name):
+            raise forms.ValidationError("Last name should not contain numbers or special characters.")
+        return last_name
