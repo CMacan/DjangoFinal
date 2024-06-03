@@ -15,10 +15,15 @@ class StudentForm(forms.ModelForm):
         }
         widgets = {
             'student_number': forms.NumberInput(attrs={'class':'form-control'}),
-            'student_number': forms.TextInput(attrs={'class':'form-control'}),
             'first_name': forms.TextInput(attrs={'class':'form-control'}),
             'last_name': forms.TextInput(attrs={'class':'form-control'}),
             'email': forms.EmailInput(attrs={'class':'form-control'}),  
             'field_of_study': forms.TextInput(attrs={'class':'form-control'}),
             'profile_picture': forms.FileInput(attrs={'class':'form-control-file'}),
         }
+    
+    def clean_student_number(self):
+        student_number = self.cleaned_data.get('student_number')
+        if not str(student_number).isdigit():
+            raise forms.ValidationError("Please enter a valid student number.")
+        return student_number
