@@ -7,8 +7,10 @@ from .forms import StudentForm
 
 # Create your views here.
 def index(request):
+    # Retrieve students ordered by student_number
+    students = Student.objects.order_by('student_number')
     return render(request, 'students/index.html', {
-        'students': Student.objects.all()
+        'students': students
     })
 
 def view_student(request, id):

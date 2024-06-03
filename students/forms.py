@@ -22,6 +22,19 @@ class StudentForm(forms.ModelForm):
             'field_of_study': forms.TextInput(attrs={'class':'form-control'}),
             'profile_picture': forms.FileInput(attrs={'class':'form-control-file'}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get("email")
+        student_number = cleaned_data.get("student_number")
+        
+        if Student.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            self.add_error('email', "This email is already in use.")
+        
+        if Student.objects.filter(student_number=student_number).exclude(pk=self.instance.pk).exists():
+            self.add_error('student_number', "This student number is already in use.")
+        
+        return cleaned_data
     
     def clean_student_number(self):
         student_number = self.cleaned_data.get('student_number')

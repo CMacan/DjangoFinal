@@ -1,87 +1,151 @@
 {% extends "students/base.html" %}
 {% load static %}
 {% block body %}
+
 <h3 class="m-4">All Students</h3>
-    <div class="row">
-        <div class="col-12">
-            {% if students %}
-            <div class="card bg-light ms-4 me-4 mb-4">
-                <div class="card-header">
-                    <i class="fa-solid fa-list fa-lg"></i> Student Records
+<div class="row">
+    <div class="col-12">
+        {% if students %}
+        <div class="card bg-light ms-4 me-4 mb-4">
+            <div class="card-header">
+                <i class="fa-solid fa-list fa-lg"></i> Student Records
+                <div class="inputBox_container">
+                    <svg class="search_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" alt="search icon">
+                        <path d="M46.599 46.599a4.498 4.498 0 0 1-6.363 0l-7.941-7.941C29.028 40.749 25.167 42 21 42 9.402 42 0 32.598 0 21S9.402 0 21 0s21 9.402 21 21c0 4.167-1.251 8.028-3.342 11.295l7.941 7.941a4.498 4.498 0 0 1 0 6.363zM21 6C12.717 6 6 12.714 6 21s6.717 15 15 15c8.286 0 15-6.714 15-15S29.286 6 21 6z">
+                        </path>
+                    </svg>
+                    <input class="inputBox" id="searchBox" type="text" placeholder="Search Student Number" style="color: #808a9e; width: 250px;">
                 </div>
-                <div class="card-body">
-                    <p class="card-text">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
                                 <th scope="col">Student Number</th>
-                                <th scope="col">Profile Picure</th>
+                                <th scope="col">Profile Picture</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Field of Study</th>
                                 <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for student in students %}
-                                <tr>
-                                    <td class="align-middle">{{ student.student_number}}</td>
-                                    <td class="text-center align-middle">
-                                        {% if student.profile_picture %}
-                                            <img src="{{ student.profile_picture.url }}" alt="Profile Picture" style="max-height: 100px; max-width: 100px;">
-                                        {% else %}
-                                            <img src="{% static 'images/avatar.png' %}" alt="Default Profile Picture" style="max-height: 100px; max-width: 100px;">
-                                        {% endif %}</td>
-                                    <td class="align-middle">{{ student.first_name}}</td>
-                                    <td class="align-middle">{{ student.last_name}}</td>
-                                    <td class="align-middle">{{ student.email}}</td>
-                                    <td class="align-middle">{{ student.field_of_study}}</td>
-                                    <td class="align-middle">
-                                        <button type="button" class="btn btn-success me-1" href="{% url 'view_student' student.id %}" data-bs-toggle="modal" data-bs-target="#myModal{{student.id}}">
-                                            <i class="fa-solid fa-circle-info fa-lg"></i>
-                                        </button>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody">
+                            {% for student in students %}
+                            <tr>
+                                <td class="align-middle">{{ student.student_number}}</td>
+                                <td class="text-center align-middle">
+                                    {% if student.profile_picture %}
+                                    <img src="{{ student.profile_picture.url }}" alt="Profile Picture" style="max-height: 100px; max-width: 100px;">
+                                    {% else %}
+                                    <img src="{% static 'images/avatar.png' %}" alt="Default Profile Picture" style="max-height: 100px; max-width: 100px;">
+                                    {% endif %}</td>
+                                <td class="align-middle">{{ student.first_name}}</td>
+                                <td class="align-middle">{{ student.last_name}}</td>
+                                <td class="align-middle">{{ student.email}}</td>
+                                <td class="align-middle">{{ student.field_of_study}}</td>
+                                <td class="align-middle">
+                                    <button type="button" class="btn btn-success me-1" href="{% url 'view_student' student.id %}" data-bs-toggle="modal" data-bs-target="#myModal{{student.id}}">
+                                        <i class="fa-solid fa-circle-info fa-lg"></i>
+                                    </button>
 
-                                        <!-- Modal View Student-->
-                                        <div class="modal" id="myModal{{student.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
+                                    <!-- Modal View Student-->
+                                    <div class="modal" id="myModal{{student.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">
                                                         Student: {{ student.first_name}} {{ student.last_name}}
                                                     </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true"></span>
+                                                        <span aria-hidden="true"></span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <ul class="list-unstyled">
-                                                    <li> Student Number: <strong>{{ student.student_number}}</strong></li>
-                                                    <li> First Name: <strong>{{ student.first_name}}</strong></li>
-                                                    <li> Last Name: <strong>{{ student.last_name}}</strong></li>
-                                                    <li> Email: <strong>{{ student.email}}</strong></li>
-                                                    <li> Field of Study: <strong>{{ student.field_of_study}}</strong></li>
+                                                        <li> Student Number: <strong>{{ student.student_number}}</strong></li>
+                                                        <li> First Name: <strong>{{ student.first_name}}</strong></li>
+                                                        <li> Last Name: <strong>{{ student.last_name}}</strong></li>
+                                                        <li> Email: <strong>{{ student.email}}</strong></li>
+                                                        <li> Field of Study: <strong>{{ student.field_of_study}}</strong></li>
                                                     </ul>
                                                 </div>
-                                                <div class="modal-footer">                                
+                                                <div class="modal-footer">
                                                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                                                </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    </p>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
+                </p>
             </div>
-            {% else %}
-                <h5 class="alert alert-primary ms-4 me-4">No Student Records</h5>
-            {% endif %}           
         </div>
-    </div>               
+        {% else %}
+        <h5 class="alert alert-primary ms-4 me-4">No Student Records</h5>
+        {% endif %}
+    </div>
+</div>
+<style>
+    .inputBox_container {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        max-width: 20em;
+        width: fit-content;
+        height: fit-content;
+        background-color: #e8e8e8;
+        border-radius: 0.8em;
+        overflow: hidden;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .search_icon {
+        height: 1em;
+        padding: 0 0.5em 0 0.8em;
+        fill: #808a9e;
+    }
+
+    .inputBox {
+        background-color: transparent;
+        color: #ffffff;
+        outline: none;
+        width: 100%;
+        border: 0;
+        padding: 0.5em 1.5em 0.5em 0;
+        font-size: 1em;
+    }
+
+    ::placeholder {
+        color: #808a9e;;
+    }
+</style>
+
+<script>
+    document.getElementById("searchBox").addEventListener("input", function () {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("studentTableBody");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; // column index of student number
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}
